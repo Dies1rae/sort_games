@@ -19,7 +19,7 @@ template <typename T>
 std::vector<T> buble_sort_(std::vector<T> main) {
 	for (size_t ptrL = 0; ptrL < main.size(); ptrL++) {
 		for (size_t ptrR = ptrL+1; ptrR < main.size(); ptrR++) {
-			if (main[ptrL] > main[ptrR]) {
+			if (main[ptrL] >= main[ptrR]) {
 				swap_(main[ptrL], main[ptrR]);
 			}
 		}
