@@ -31,7 +31,7 @@ template <typename T>
 void binary_sort_(std::vector<T>& main, size_t L, size_t R) {
 	size_t ptrL = L, ptrR = R;
 	T mid_ = main[(ptrL + ptrR)/2];
-	while (ptrL <= ptrR) {
+	do {
 		while (main[ptrL] < mid_) {
 			ptrL++;
 		}
@@ -41,7 +41,7 @@ void binary_sort_(std::vector<T>& main, size_t L, size_t R) {
 		if (ptrL <= ptrR) {
 			swap_(main[ptrL++], main[ptrR--]);
 		}
-	} 
+	} while (ptrL <= ptrR);
 	if (L < ptrR) {
 		binary_sort_(main, L, ptrR);
 	}
@@ -77,9 +77,42 @@ void merge_sort_(std::vector<T>& main, size_t B, size_t S) {
 		}
 	}
 	for (size_t ptr = B; ptr < S; ++ptr) {
-		main[ptr] = tmp_array[ptr - B];
+		main[ptr] = tmp_array[ptr-B];
 	}
 	
+}
+
+template <typename T>
+std::vector<T> insertion_sort_(std::vector<T> main) {
+	for (std::size_t ptr = 1; ptr < main.size(); ptr++) {
+		for (std::size_t ptr2 = ptr; ptr2 > 0 && main[ptr2 - 1] > main[ptr2]; ptr2--) {
+			swap_(main[ptr2 - 1], main[ptr2]);
+		}
+	}
+	return main;
+}
+
+
+template <typename T>
+void quick_sort_(std::vector<T>& main, size_t L, size_t H) {
+	std::size_t ptr_l = L, ptr_r = H, ptr_tmp_, pivot = main[std::floor((L+H)/2)];
+	while (ptr_l <= ptr_r) {
+		while (main[ptr_l] < pivot) {
+			ptr_l++;
+		}
+		while (main[ptr_r] > pivot) {
+			ptr_r--;
+		}
+		if (ptr_l <= ptr_r) {
+			swap_(main[ptr_l++], main[ptr_r--]);
+		}
+	}
+	if (L < ptr_r) {
+		quick_sort_(main,L,ptr_r);
+	}
+	if (ptr_l < H) {
+		quick_sort_(main, ptr_l, H);
+	}
 }
 
 
@@ -107,6 +140,7 @@ int main() {
 	std::cout << "Sort + cout time: " << diff.count() << " ms" << std::endl;
 	std::cout << std::endl;
 	//------
+
 	std::cout << "3)BINARY_SORT_ ALGO:" << std::endl;
 	std::vector<int>res(BASE.begin(), BASE.end());
 	size_t L = 0;
@@ -122,6 +156,7 @@ int main() {
 	std::cout << "Sort + cout time: " << diff1.count() << " ms" << std::endl;
 	std::cout << std::endl;
 	//------
+
 	std::cout << "3)MERGE_SORT ALGO:" << std::endl;
 	std::vector<int>res1(BASE.begin(), BASE.end());
 	Time t5 = std::chrono::high_resolution_clock::now();
@@ -134,8 +169,35 @@ int main() {
 	Diff diff2 = std::chrono::duration_cast<Diff>(t6 - t5);
 	std::cout << "Sort + cout time: " << diff2.count() << " ms" << std::endl;
 	std::cout << std::endl;
+	//------
 
+	std::cout << "4)INSERTION_SORT ALGO:" << std::endl;
+	Time t7 = std::chrono::high_resolution_clock::now();
+	for (const auto& ptr : insertion_sort_(BASE)) {
+		std::cout << ptr << ' ';
+	}
+	std::cout << std::endl;
+	Time t8 = std::chrono::high_resolution_clock::now();
+	Diff diff3 = std::chrono::duration_cast<Diff>(t8 - t7);
+	std::cout << "Sort + cout time: " << diff3.count() << " ms" << std::endl;
+	std::cout << std::endl;
+	//------
 
+	std::cout << "5)QUICK_SORT ALGO:" << std::endl;
+	std::vector<int>res2(BASE.begin(), BASE.end());
+	size_t l = 0;
+	size_t r = res2.size() - 1;
+	Time t9 = std::chrono::high_resolution_clock::now();
+	quick_sort_(res2, l, r);
+	for (const auto& ptr : res2) {
+		std::cout << ptr << ' ';
+	}
+	std::cout << std::endl;
+	Time t10 = std::chrono::high_resolution_clock::now();
+	Diff diff4 = std::chrono::duration_cast<Diff>(t10 - t9);
+	std::cout << "Sort + cout time: " << diff4.count() << " ms" << std::endl;
+	std::cout << std::endl;
+	//------
 	return 0;
 }
 
