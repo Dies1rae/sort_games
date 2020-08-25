@@ -115,6 +115,21 @@ void quick_sort_(std::vector<T>& main, size_t L, size_t H) {
 	}
 }
 
+template <typename T>
+std::vector<T> selection_sort_(std::vector<T> main, std::size_t S) {
+	std::size_t min_indx;
+	for (std::size_t ptr = 0; ptr < S; ptr++) {
+		min_indx = ptr;
+		for (std::size_t ptr2 = ptr+1; ptr2 < S; ptr2++) {
+			if (main[ptr2] < main[min_indx]) {
+				min_indx = ptr2;
+			}
+			swap_(main[min_indx], main[ptr]);
+		}
+	}
+	return main;
+}
+
 
 int main() {
 	using Time = std::chrono::time_point<std::chrono::high_resolution_clock>;
@@ -198,6 +213,20 @@ int main() {
 	std::cout << "Sort + cout time: " << diff4.count() << " ms" << std::endl;
 	std::cout << std::endl;
 	//------
+
+	std::cout << "6)SELECTION_SORT_ ALGO:" << std::endl;
+	Time t11 = std::chrono::high_resolution_clock::now();
+	for (const auto& ptr : selection_sort_(BASE,BASE.size())) {
+		std::cout << ptr << ' ';
+	}
+	std::cout << std::endl;
+	Time t12 = std::chrono::high_resolution_clock::now();
+	Diff diff5 = std::chrono::duration_cast<Diff>(t12 - t11);
+	std::cout << "Sort + cout time: " << diff.count() << " ms" << std::endl;
+	std::cout << std::endl;
+
+
+
 	return 0;
 }
 
