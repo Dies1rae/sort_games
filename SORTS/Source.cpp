@@ -118,7 +118,7 @@ void quick_sort_(std::vector<T>& main, size_t L, size_t H) {
 template <typename T>
 std::vector<T> selection_sort_(std::vector<T> main, std::size_t S) {
 	std::size_t min_indx;
-	for (std::size_t ptr = 0; ptr < S; ptr++) {
+	for (std::size_t ptr = 0; ptr < S-1; ptr++) {
 		min_indx = ptr;
 		for (std::size_t ptr2 = ptr+1; ptr2 < S; ptr2++) {
 			if (main[ptr2] < main[min_indx]) {
