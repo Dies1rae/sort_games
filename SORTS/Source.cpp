@@ -139,7 +139,7 @@ int main() {
 	buble_sort_(a);
 	Time t2 = std::chrono::steady_clock::now();
 	Diff diff = std::chrono::duration_cast<Diff>(t2 - t1);
-	std::cout << "Sort + cout time: " << diff.count() << " mcro" << std::endl;
+	std::cout << "Sort time: " << diff.count() << " mcro" << std::endl;
 	std::cout << std::endl;
 	//------
 
@@ -152,7 +152,7 @@ int main() {
 	binary_sort_(b, L, R);
 	Time t4 = std::chrono::high_resolution_clock::now();
 	Diff diff1 = std::chrono::duration_cast<Diff>(t4 - t3);
-	std::cout << "Sort + cout time: " << diff1.count() << " mcro" << std::endl;
+	std::cout << "Sort time: " << diff1.count() << " mcro" << std::endl;
 	std::cout << std::endl;
 	//------
 	*/
@@ -162,7 +162,7 @@ int main() {
 	merge_sort_(c, 0, c.size());
 	Time t6 = std::chrono::high_resolution_clock::now();
 	Diff diff2 = std::chrono::duration_cast<Diff>(t6 - t5);
-	std::cout << "Sort + cout time: " << diff2.count() << " mcro" << std::endl;
+	std::cout << "Sort time: " << diff2.count() << " mcro" << std::endl;
 	std::cout << std::endl;
 	//------
 
@@ -172,7 +172,7 @@ int main() {
 	insertion_sort_(d);
 	Time t8 = std::chrono::high_resolution_clock::now();
 	Diff diff3 = std::chrono::duration_cast<Diff>(t8 - t7);
-	std::cout << "Sort + cout time: " << diff3.count() << " mcro" << std::endl;
+	std::cout << "Sort time: " << diff3.count() << " mcro" << std::endl;
 	std::cout << std::endl;
 	//------
 
@@ -183,7 +183,7 @@ int main() {
 	quick_sort_(e, 0, e.size());
 	Time t10 = std::chrono::high_resolution_clock::now();
 	Diff diff4 = std::chrono::duration_cast<Diff>(t10 - t9);
-	std::cout << "Sort + cout time: " << diff4.count() << " mcro" << std::endl;
+	std::cout << "Sort time: " << diff4.count() << " mcro" << std::endl;
 	std::cout << std::endl;
 	//------
 	*/
@@ -194,7 +194,7 @@ int main() {
 	selection_sort_(ff, ff.size());
 	Time t12 = std::chrono::high_resolution_clock::now();
 	Diff diff5 = std::chrono::duration_cast<Diff>(t12 - t11);
-	std::cout << "Sort + cout time: " << diff5.count() << " mcro" << std::endl;
+	std::cout << "Sort time: " << diff5.count() << " mcro" << std::endl;
 	
 	return 0;
 }
