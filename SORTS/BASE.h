@@ -1,5 +1,18 @@
 #pragma once
 #include <vector>
+#include <random>
+#include <iostream>
 
-
-const std::vector<int>BASE{ 55,220,300,2,1,4,5,6,7,8,9,10,23,4424,52512546,456457,468,7,456,34,5,576,457,56,876,896,734,52,6,457,256,13,613,4765536,7,567845,78,467,45 };
+int irnd(int a){
+	srand(a);
+	long rnd_hld = rand();
+	return (((rnd_hld = rnd_hld * 214013L + 2531011L) >> 16) & 0x7fff);
+}
+ std::vector<int> do_rnd_bse_() {
+	std::vector<int> res;
+	for (int ptr = 0; ptr < 500; ptr++) {
+		int tmp = irnd(ptr);
+		res.push_back(tmp);
+	}
+	return res;
+}
