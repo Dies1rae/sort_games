@@ -146,13 +146,15 @@ int main() {
 	//------
 	std::cout << "2)BUBLE_SORT_ ALGO:" << std::endl;
 	Time t1 = std::chrono::high_resolution_clock::now();
+	buble_sort_(BASE);
+	Time t2 = std::chrono::high_resolution_clock::now();
+	auto nanosec = (t2.time_since_epoch() - t1.time_since_epoch());
 	for (const auto& ptr : buble_sort_(BASE)) {
 		std::cout << ptr << ' ';
 	}
 	std::cout << std::endl;
-	Time t2 = std::chrono::high_resolution_clock::now();
-	Diff diff = std::chrono::duration_cast<Diff>(t2 - t1);
-	std::cout << "Sort + cout time: " << diff.count() << " ms" << std::endl;
+	
+	std::cout << "Sort + cout time: " << nanosec.count() << " ms" << std::endl;
 	std::cout << std::endl;
 	//------
 
@@ -222,10 +224,9 @@ int main() {
 	std::cout << std::endl;
 	Time t12 = std::chrono::high_resolution_clock::now();
 	Diff diff5 = std::chrono::duration_cast<Diff>(t12 - t11);
-	std::cout << "Sort + cout time: " << diff.count() << " ms" << std::endl;
+	std::cout << "Sort + cout time: " << diff5.count() << " ms" << std::endl;
 	std::cout << std::endl;
-
-
+	
 
 	return 0;
 }
