@@ -5,7 +5,8 @@
 #include <iterator>
 #include <utility>
 #include <chrono>
-
+using Time = std::chrono::time_point<std::chrono::high_resolution_clock>;
+using Diff = std::chrono::microseconds;
 
 
 template <typename T>
@@ -16,7 +17,7 @@ void swap_(T& a, T& b) {
 }
 
 template <typename T>
-std::vector<T> buble_sort_(std::vector<T> main) {
+void buble_sort_(std::vector<T>& main) {
 	for (size_t ptrL = 0; ptrL < main.size(); ptrL++) {
 		for (size_t ptrR = ptrL+1; ptrR < main.size(); ptrR++) {
 			if (main[ptrL] >= main[ptrR]) {
@@ -24,7 +25,6 @@ std::vector<T> buble_sort_(std::vector<T> main) {
 			}
 		}
 	}
-	return main;
 }
 
 template <typename T>
@@ -83,19 +83,18 @@ void merge_sort_(std::vector<T>& main, size_t B, size_t S) {
 }
 
 template <typename T>
-std::vector<T> insertion_sort_(std::vector<T> main) {
+void insertion_sort_(std::vector<T>& main) {
 	for (std::size_t ptr = 1; ptr < main.size(); ptr++) {
 		for (std::size_t ptr2 = ptr; ptr2 > 0 && main[ptr2 - 1] > main[ptr2]; ptr2--) {
 			swap_(main[ptr2 - 1], main[ptr2]);
 		}
 	}
-	return main;
 }
 
 
 template <typename T>
-void quick_sort_(std::vector<T>& main, size_t L, size_t H) {
-	std::size_t ptr_l = L, ptr_r = H, ptr_tmp_, pivot = main[std::floor((L+H)/2)];
+void quick_sort_(std::vector<T>& main, int L, int H) {
+	int ptr_l = L, ptr_r = H, ptr_tmp_, pivot = main[int(H+L/2)];
 	while (ptr_l <= ptr_r) {
 		while (main[ptr_l] < pivot) {
 			ptr_l++;
@@ -116,7 +115,7 @@ void quick_sort_(std::vector<T>& main, size_t L, size_t H) {
 }
 
 template <typename T>
-std::vector<T> selection_sort_(std::vector<T> main, std::size_t S) {
+void selection_sort_(std::vector<T>& main, std::size_t S) {
 	std::size_t min_indx;
 	for (std::size_t ptr = 0; ptr < S-1; ptr++) {
 		min_indx = ptr;
@@ -127,107 +126,76 @@ std::vector<T> selection_sort_(std::vector<T> main, std::size_t S) {
 			swap_(main[min_indx], main[ptr]);
 		}
 	}
-	return main;
 }
 
 
 int main() {
-	using Time = std::chrono::time_point<std::chrono::high_resolution_clock>;
-	using Diff = std::chrono::milliseconds;
+	std::vector<int> BASE = do_rnd_bse_();
 	
-
 	//------
-	std::cout << "1)NO SORT:" << std::endl;
-	for (const auto& ptr : BASE) {
-		std::cout << ptr << ' ';
-	}
-	std::cout << std::endl;
-	std::cout << std::endl;
-	//------
-	std::cout << "2)BUBLE_SORT_ ALGO:" << std::endl;
-	Time t1 = std::chrono::high_resolution_clock::now();
-	buble_sort_(BASE);
-	Time t2 = std::chrono::high_resolution_clock::now();
-	auto nanosec = (t2.time_since_epoch() - t1.time_since_epoch());
-	for (const auto& ptr : buble_sort_(BASE)) {
-		std::cout << ptr << ' ';
-	}
-	std::cout << std::endl;
-	
-	std::cout << "Sort + cout time: " << nanosec.count() << " ms" << std::endl;
+	std::cout << "1)BUBLE_SORT_ ALGO:" << std::endl;
+	std::vector<int>a(BASE.begin(), BASE.end());
+	Time t1 = std::chrono::steady_clock::now();
+	buble_sort_(a);
+	Time t2 = std::chrono::steady_clock::now();
+	Diff diff = std::chrono::duration_cast<Diff>(t2 - t1);
+	std::cout << "Sort time: " << diff.count() << " mcro" << std::endl;
 	std::cout << std::endl;
 	//------
 
-	std::cout << "3)BINARY_SORT_ ALGO:" << std::endl;
-	std::vector<int>res(BASE.begin(), BASE.end());
+	/*
+	std::cout << "2)BINARY_SORT_ ALGO:" << std::endl;
+	std::vector<int>b(BASE.begin(), BASE.end())
 	size_t L = 0;
-	size_t R = res.size() - 1;
+	size_t R = b.size() - 1;
 	Time t3 = std::chrono::high_resolution_clock::now();
-	binary_sort_(res, L, R);
-	for (const auto& ptr : res) {
-		std::cout << ptr << ' ';
-	} 
-	std::cout << std::endl;
+	binary_sort_(b, L, R);
 	Time t4 = std::chrono::high_resolution_clock::now();
 	Diff diff1 = std::chrono::duration_cast<Diff>(t4 - t3);
-	std::cout << "Sort + cout time: " << diff1.count() << " ms" << std::endl;
+	std::cout << "Sort time: " << diff1.count() << " mcro" << std::endl;
 	std::cout << std::endl;
 	//------
-
+	*/
 	std::cout << "3)MERGE_SORT ALGO:" << std::endl;
-	std::vector<int>res1(BASE.begin(), BASE.end());
+	std::vector<int>c(BASE.begin(), BASE.end());
 	Time t5 = std::chrono::high_resolution_clock::now();
-	merge_sort_(res1, 0, res1.size());
-	for (const auto& ptr : res1) {
-		std::cout << ptr << ' ';
-	}
-	std::cout << std::endl;
+	merge_sort_(c, 0, c.size());
 	Time t6 = std::chrono::high_resolution_clock::now();
 	Diff diff2 = std::chrono::duration_cast<Diff>(t6 - t5);
-	std::cout << "Sort + cout time: " << diff2.count() << " ms" << std::endl;
+	std::cout << "Sort time: " << diff2.count() << " mcro" << std::endl;
 	std::cout << std::endl;
 	//------
 
 	std::cout << "4)INSERTION_SORT ALGO:" << std::endl;
+	std::vector<int>d(BASE.begin(), BASE.end());
 	Time t7 = std::chrono::high_resolution_clock::now();
-	for (const auto& ptr : insertion_sort_(BASE)) {
-		std::cout << ptr << ' ';
-	}
-	std::cout << std::endl;
+	insertion_sort_(d);
 	Time t8 = std::chrono::high_resolution_clock::now();
 	Diff diff3 = std::chrono::duration_cast<Diff>(t8 - t7);
-	std::cout << "Sort + cout time: " << diff3.count() << " ms" << std::endl;
+	std::cout << "Sort time: " << diff3.count() << " mcro" << std::endl;
 	std::cout << std::endl;
 	//------
 
+	/*
 	std::cout << "5)QUICK_SORT ALGO:" << std::endl;
-	std::vector<int>res2(BASE.begin(), BASE.end());
-	size_t l = 0;
-	size_t r = res2.size() - 1;
+	std::vector<int>e(BASE.begin(), BASE.end());
 	Time t9 = std::chrono::high_resolution_clock::now();
-	quick_sort_(res2, l, r);
-	for (const auto& ptr : res2) {
-		std::cout << ptr << ' ';
-	}
-	std::cout << std::endl;
+	quick_sort_(e, 0, e.size());
 	Time t10 = std::chrono::high_resolution_clock::now();
 	Diff diff4 = std::chrono::duration_cast<Diff>(t10 - t9);
-	std::cout << "Sort + cout time: " << diff4.count() << " ms" << std::endl;
+	std::cout << "Sort time: " << diff4.count() << " mcro" << std::endl;
 	std::cout << std::endl;
 	//------
+	*/
 
 	std::cout << "6)SELECTION_SORT_ ALGO:" << std::endl;
+	std::vector<int>ff(BASE.begin(), BASE.end());
 	Time t11 = std::chrono::high_resolution_clock::now();
-	for (const auto& ptr : selection_sort_(BASE,BASE.size())) {
-		std::cout << ptr << ' ';
-	}
-	std::cout << std::endl;
+	selection_sort_(ff, ff.size());
 	Time t12 = std::chrono::high_resolution_clock::now();
 	Diff diff5 = std::chrono::duration_cast<Diff>(t12 - t11);
-	std::cout << "Sort + cout time: " << diff5.count() << " ms" << std::endl;
-	std::cout << std::endl;
+	std::cout << "Sort time: " << diff5.count() << " mcro" << std::endl;
 	
-
 	return 0;
 }
 
