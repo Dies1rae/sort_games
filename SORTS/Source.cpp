@@ -28,14 +28,14 @@ void buble_sort_(std::vector<T>& main) {
 }
 
 template <typename T>
-void binary_sort_(std::vector<T>& main, size_t L, size_t R) {
-	size_t ptrL = L, ptrR = R;
-	T mid_ = main[(ptrL + ptrR)/2];
+void binary_sort_(std::vector<T>& main, int L, int R) {
+	int ptrL = static_cast<int>(L), ptrR = static_cast<int>(R);
+	int mid_ = main[static_cast<int>((ptrL + ptrR)/2)];
 	do {
-		while (main[ptrL] < mid_) {
+		while (main[ptrL] > mid_) {
 			ptrL++;
 		}
-		while (main[ptrR] > mid_) {
+		while (main[ptrR] < mid_) {
 			ptrR--;
 		}
 		if (ptrL <= ptrR) {
@@ -143,11 +143,11 @@ int main() {
 	std::cout << std::endl;
 	//------
 
-	/*
+	
 	std::cout << "2)BINARY_SORT_ ALGO:" << std::endl;
-	std::vector<int>b(BASE.begin(), BASE.end())
-	size_t L = 0;
-	size_t R = b.size() - 1;
+	std::vector<int>b(BASE.begin(), BASE.end());
+	int L = 0;
+	int R = b.size() - 1;
 	Time t3 = std::chrono::high_resolution_clock::now();
 	binary_sort_(b, L, R);
 	Time t4 = std::chrono::high_resolution_clock::now();
@@ -155,7 +155,7 @@ int main() {
 	std::cout << "Sort time: " << diff1.count() << " mcro" << std::endl;
 	std::cout << std::endl;
 	//------
-	*/
+	
 	std::cout << "3)MERGE_SORT ALGO:" << std::endl;
 	std::vector<int>c(BASE.begin(), BASE.end());
 	Time t5 = std::chrono::high_resolution_clock::now();
