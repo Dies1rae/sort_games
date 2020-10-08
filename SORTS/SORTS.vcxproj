@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="algo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BASE.h" />
