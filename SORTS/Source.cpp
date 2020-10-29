@@ -176,7 +176,7 @@ int main() {
 	std::cout << std::endl;
 	//------
 
-	/*
+	/*NEED TO REBUILD
 	std::cout << "5)QUICK_SORT ALGO:" << std::endl;
 	std::vector<int>e(BASE.begin(), BASE.end());
 	Time t9 = std::chrono::high_resolution_clock::now();
