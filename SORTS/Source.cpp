@@ -51,20 +51,8 @@ void binary_sort_(std::vector<T>& main, int L, int R) {
 }
 
 template <typename T>
-void merge_sort_(std::vector<T>& main, size_t B, size_t S) {
-	if (S - B < 2) {
-		return;
-	}
-	if (S - B == 2) {
-		if (main[B] > main[B+1]) {
-			swap_(main[B], main[B+1]);
-		}
-		return;
-	}
-	
-	merge_sort_(main, B, B + (S - B ) / 2);
-	merge_sort_(main, B + (S - B) / 2, S);
-	std::size_t b1 = B, e1 = B + (S - B) / 2, b2 = e1;
+void merge(std::vector<T>& main, size_t B, size_t S, size_t Q) {
+	std::size_t b1 = B, e1 = Q, b2 = e1;
 	std::vector<T> tmp_array;
 	while (tmp_array.size() < S - B) {
 		if (b1 >= e1 || (b2 < S && main[b2] <= main[b1])) {
@@ -79,7 +67,23 @@ void merge_sort_(std::vector<T>& main, size_t B, size_t S) {
 	for (size_t ptr = B; ptr < S; ++ptr) {
 		main[ptr] = tmp_array[ptr-B];
 	}
+}
+
+template <typename T>
+void merge_sort_(std::vector<T>& main, size_t B, size_t S) {
+	if (S - B < 2) {
+		return;
+	}
+	if (S - B == 2) {
+		if (main[B] > main[B+1]) {
+			swap_(main[B], main[B+1]);
+		}
+		return;
+	}
 	
+	merge_sort_(main, B, B + (S - B ) / 2);
+	merge_sort_(main, B + (S - B) / 2, S);
+	merge(main, B, S, B + (S - B) / 2);
 }
 
 template <typename T>
